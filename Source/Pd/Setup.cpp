@@ -677,6 +677,10 @@ void knob_setup();
 void pdlua_setup(char const* datadir, char* vers, int vers_len);
 }
 
+extern "C" {
+void websocketserver_setup();
+}
+
 namespace pd {
 
 static int defaultfontshit[] = {
@@ -1127,6 +1131,7 @@ void Setup::initialiseELSE()
     var_setup();
     conv_tilde_setup();
     fm_tilde_setup();
+    websocketserver_setup();
 }
 
 void Setup::initialiseCyclone()

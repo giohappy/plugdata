@@ -1303,8 +1303,12 @@ void PluginProcessor::receiveNoteOn(int const channel, int const pitch, int cons
     if (velocity == 0) {
         midiBufferOut.addEvent(MidiDeviceManager::convertToSysExFormat(MidiMessage::noteOff(deviceChannel, pitch, uint8(0)), device), audioAdvancement);
     } else {
-        midiBufferOut.addEvent(MidiDeviceManager::convertToSysExFormat(MidiMessage::noteOn(deviceChannel, pitch, static_cast<uint8>(velocity)), device), audioAdvancement);
+        auto ms = MidiDeviceManager::convertToSysExFormat(MidiMessage::noteOn(deviceChannel, pitch, static_cast<uint8>(velocity)), device);
+        midiBufferOut.addEvent(ms, audioAdvancement);
     }
+    //DBG(std::format("{:6}", midiBufferOut.isEmpty()));
+    for (const MidiMessageMetadata metadata : midiBufferOut)
+            Logger::writeToLog(metadata.getMessage().getDescription());
 }
 
 void PluginProcessor::receiveControlChange(int const channel, int const controller, int const value)

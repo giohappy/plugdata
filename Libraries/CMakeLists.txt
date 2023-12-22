@@ -223,6 +223,17 @@ include_directories(cyclone/)
 include_directories(cyclone/shared/)
 source_group(cyclone FILES ${CYCLONE_SOURCES})
 
+file(GLOB_RECURSE PD_WEBSOCKETSERVER_SOURCES
+    ./pd-websocketserver/src/*.c
+    ./pd-websocketserver/base64/*.c
+    ./pd-websocketserver/handshake/*.c
+    ./pd-websocketserver/sha1/*.c
+    ./pd-websocketserver/utf8/*.c
+)
+
+include_directories(pd-websocketserver/include/)
+source_group(pd-websocketserver FILES ${PD_WEBSOCKETSERVER_SOURCES})
+
 # pdlua sources
 set(PDLUA_PATH "${CMAKE_CURRENT_SOURCE_DIR}/pd-lua")
 set(PDLUA_SOURCES ${PDLUA_PATH}/pdlua.c)
@@ -383,8 +394,8 @@ source_group(ofelia FILES ${OFELIA_SOURCES})
 # ------------------------------------------------------------------------------#
 # TARGETS
 # ------------------------------------------------------------------------------#
-add_library(externals STATIC ${ELSE_SOURCES} ${CYCLONE_SOURCES} ${PDLUA_SOURCES} ${AUBIO_SOURCES} ${OFELIA_SOURCES})
-add_library(externals-multi STATIC ${ELSE_SOURCES} ${CYCLONE_SOURCES} ${PDLUA_SOURCES} ${AUBIO_SOURCES} ${OFELIA_SOURCES})
+add_library(externals STATIC ${ELSE_SOURCES} ${CYCLONE_SOURCES} ${PDLUA_SOURCES} ${AUBIO_SOURCES} ${OFELIA_SOURCES} ${PD_WEBSOCKETSERVER_SOURCES})
+add_library(externals-multi STATIC ${ELSE_SOURCES} ${CYCLONE_SOURCES} ${PDLUA_SOURCES} ${AUBIO_SOURCES} ${OFELIA_SOURCES} ${PD_WEBSOCKETSERVER_SOURCES})
 
 # ag: pdlua needs PLUGDATA symbol at compile time for PlugData integration.
 target_compile_definitions(externals PRIVATE ${LIBPD_COMPILE_DEFINITIONS} PLUGDATA=1)
