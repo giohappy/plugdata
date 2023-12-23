@@ -1351,6 +1351,8 @@ static void *ws_establishconnection(t_websocketserver *x)
 	sock             = client_socks[connection_index].client_sock;
 	p_index          = client_socks[connection_index].port_index;
 
+	pd_setinstance(x->current_instance);
+
 	/* Prepare frame data. */
 	memset(&wfd, 0, sizeof(wfd));
 	wfd.sock = sock;

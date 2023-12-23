@@ -406,7 +406,7 @@ static void pthreadwrap(t_websocketserver *x) {
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 
-	
+	pd_setinstance(x->current_instance);
 	
 	struct ws_events evs;
 
@@ -438,6 +438,7 @@ static void *websocketserver_new(void)
 	x->x_numatoms = 1024;
 	x->x_atoms = getbytes(sizeof(*x->x_atoms) * x->x_numatoms);
 	x->verbosity = 0;
+    x->current_instance = pd_this;
    
   return (void *)x;
 }
@@ -447,7 +448,7 @@ static void *websocketserver_new(void)
   logpost(x, 2, "Hello World");
 }*/
 
-pthread_t tid;
+/* pthread_t tid;
 void postfromthread(t_websocketserver*);
 
 void helloworld_bang(t_websocketserver* x)
@@ -459,6 +460,7 @@ void postfromthread(t_websocketserver* x)
 {
    logpost(x, 2, "Hello World from thread");
 }
+*/
 
 void websocketserver_setup(void) {
 
@@ -469,7 +471,7 @@ void websocketserver_setup(void) {
 			       CLASS_DEFAULT,				   
 			       0);                        
 
-  class_addbang(websocketserver_class, helloworld_bang);  
+  //class_addbang(websocketserver_class, websocketserver_main);  
   class_addmethod(websocketserver_class, (t_method)websocketserver_main, gensym("connect"), A_FLOAT, 0);
   class_addmethod(websocketserver_class, (t_method)websocketserver_disconnect, gensym("disconnect"), 0);
   class_addmethod(websocketserver_class, (t_method)websocketserver_send, gensym("send"), A_FLOAT, 0);

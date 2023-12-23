@@ -73,6 +73,7 @@ typedef struct _websocketserver {
   t_atom serverstatus[2];  
   int port_index;
   int sock;
+  t_pdinstance* current_instance;
   
 } t_websocketserver;
 	
