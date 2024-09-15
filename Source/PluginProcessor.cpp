@@ -797,6 +797,7 @@ void PluginProcessor::sendPlayhead()
 
         if (infos->getBpm().hasValue()) {
             atoms_playhead.resize(1);
+            float bpm = static_cast<float>(*infos->getBpm());
             atoms_playhead[0] = static_cast<float>(*infos->getBpm());
             sendMessage("playhead", "bpm", atoms_playhead);
         }

@@ -406,7 +406,10 @@ static void pthreadwrap(t_websocketserver *x) {
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 
-	pd_setinstance(x->current_instance);
+	#ifdef PDINSTANCE
+        pd_setinstance(x->current_instance);
+	#endif
+	
 	
 	struct ws_events evs;
 
